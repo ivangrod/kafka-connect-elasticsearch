@@ -85,13 +85,15 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void getsVersion() {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     assertThat(client.getVersion(), is(equalTo(ElasticsearchClient.Version.ES_V1)));
   }
 
   @Test
   public void createsIndices() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     JestResult failure = new JestResult(new Gson());
     failure.setSucceeded(false);
     JestResult success = new JestResult(new Gson());
@@ -121,7 +123,8 @@ public class JestElasticsearchClientTest {
 
   @Test(expected = ConnectException.class)
   public void createIndicesAndFails() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     JestResult failure = new JestResult(new Gson());
     failure.setSucceeded(false);
     IndicesExists indicesExists = new IndicesExists.Builder(INDEX).build();
@@ -162,7 +165,8 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void getsMapping() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     JsonObject mapping = new JsonObject();
     JsonObject mappings = new JsonObject();
     mappings.add(TYPE, mapping);
@@ -180,7 +184,8 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void executesBulk() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     IndexableRecord record = new IndexableRecord(new Key(INDEX, TYPE, KEY), "payload", 0L);
     List<IndexableRecord> records = new ArrayList<>();
     records.add(record);
@@ -194,7 +199,8 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void executesBulkAndFails() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     IndexableRecord record = new IndexableRecord(new Key(INDEX, TYPE, KEY), null, 0L);
     List<IndexableRecord> records = new ArrayList<>();
     records.add(record);
@@ -208,7 +214,8 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void executesBulkAndFailsWithParseError() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     IndexableRecord record = new IndexableRecord(new Key(INDEX, TYPE, KEY), "payload", 0L);
     List<IndexableRecord> records = new ArrayList<>();
     records.add(record);
@@ -221,7 +228,8 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void executesBulkAndFailsWithSomeOtherError() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     IndexableRecord record = new IndexableRecord(new Key(INDEX, TYPE, KEY), "payload", 0L);
     List<IndexableRecord> records = new ArrayList<>();
     records.add(record);
@@ -234,7 +242,8 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void executesBulkAndSucceedsBecauseOnlyVersionConflicts() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     IndexableRecord record = new IndexableRecord(new Key(INDEX, TYPE, KEY), "payload", 0L);
     List<IndexableRecord> records = new ArrayList<>();
     records.add(record);
@@ -247,7 +256,8 @@ public class JestElasticsearchClientTest {
 
   @Test
   public void searches() throws Exception {
-    JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
+    @SuppressWarnings("resource")
+	JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     Search search = new Search.Builder(QUERY).addIndex(INDEX).addType(TYPE).build();
     JsonObject queryResult = new JsonObject();
     SearchResult result = new SearchResult(new Gson());
@@ -257,7 +267,8 @@ public class JestElasticsearchClientTest {
     assertThat(client.search(QUERY, INDEX, TYPE), is(equalTo(queryResult)));
   }
 
-  @Test
+  @SuppressWarnings("deprecation")
+@Test
   public void closes() {
     JestElasticsearchClient client = new JestElasticsearchClient(jestClient);
     client.close();

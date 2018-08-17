@@ -53,7 +53,6 @@ public class ElasticsearchWriter {
   private final DataConverter converter;
 
   private final Set<String> existingMappings;
-  private final BehaviorOnMalformedDoc behaviorOnMalformedDoc;
 
   ElasticsearchWriter(
       ElasticsearchClient client,
@@ -86,7 +85,6 @@ public class ElasticsearchWriter {
     this.dropInvalidMessage = dropInvalidMessage;
     this.behaviorOnNullValues = behaviorOnNullValues;
     this.converter = new DataConverter(useCompactMapEntries, behaviorOnNullValues);
-    this.behaviorOnMalformedDoc = behaviorOnMalformedDoc;
 
     bulkProcessor = new BulkProcessor<>(
         new SystemTime(),

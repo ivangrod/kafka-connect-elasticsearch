@@ -373,7 +373,11 @@ public class BulkProcessorTest {
     // Test both IGNORE and WARN options
     // There is no difference in logic between IGNORE and WARN, except for the logging.
     // Test to ensure they both work the same logically
-    final List<BehaviorOnMalformedDoc> behaviorsToTest = new ArrayList<BehaviorOnMalformedDoc>() {{
+    final List<BehaviorOnMalformedDoc> behaviorsToTest = new ArrayList<BehaviorOnMalformedDoc>() {
+
+		private static final long serialVersionUID = 1L;
+
+	{
       add(BehaviorOnMalformedDoc.WARN);
       add(BehaviorOnMalformedDoc.IGNORE);
     }};

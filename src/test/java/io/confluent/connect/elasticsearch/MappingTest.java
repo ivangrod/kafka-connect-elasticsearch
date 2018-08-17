@@ -37,7 +37,6 @@ public class MappingTest extends ElasticsearchSinkTestBase {
   private static final String TYPE = "kafka-connect-type";
 
   @Test
-  @SuppressWarnings("unchecked")
   public void testMapping() throws Exception {
     InternalTestCluster cluster = ESIntegTestCase.internalCluster();
     cluster.ensureAtLeastNumDataNodes(1);
@@ -93,7 +92,6 @@ public class MappingTest extends ElasticsearchSinkTestBase {
         .build();
   }
 
-  @SuppressWarnings("unchecked")
   private void verifyMapping(Schema schema, JsonObject mapping) throws Exception {
     String schemaName = schema.name();
 
