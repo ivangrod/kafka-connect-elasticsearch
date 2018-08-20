@@ -12,6 +12,11 @@ FROM confluentinc/cp-kafka-connect as kafka-connect
 
 COPY --from=BUILD /usr/src/kafka-connect-elasticsearch/target/kafka-connect-elasticsearch-5.0.0-standalone.jar /connect-plugins/kafka-connect-elasticsearch-5.0.0-standalone.jar
 
+COPY --from=BUILD /usr/src/kafka-connect-elasticsearch/config/quickstart-elasticsearch.properties /etc/kafka-connect-elasticsearch/quickstart-elasticsearch.properties
+
+COPY docker/add-connector.sh /etc/confluent/add-connector.sh
+COPY docker/entrypoint.sh /etc/confluent/entrypoint.sh
+
 ENV CONNECT_GROUP_ID connect
 ENV CONNECT_CONFIG_STORAGE_TOPIC connect-config
 ENV CONNECT_OFFSET_STORAGE_TOPIC connect-offsets
@@ -31,6 +36,10 @@ ENV CONNECT_PLUGIN_PATH /connect-plugins
 ENV CONNECT_LOG4J_ROOT_LOGLEVEL INFO
 ENV CONNECT_LOG4J_LOGGERS org.reflections=ERROR
 ENV CLASSPATH /usr/share/java/monitoring-interceptors/monitoring-interceptors-3.3.0.jar
+
+CMD ["/etc/confluent/entrypoint.sh"]
+
+
 
 
 
