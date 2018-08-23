@@ -11,7 +11,7 @@ function push_config {
     # cat $APP_PROPERTIES_FILE
     JSON_OUTPUT=$(curl --header "Content-Type: application/json" \
      --request POST \
-     --data '{   "name": "feed-item-connector",   "config": {     "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",     "tasks.max": "1",     "topics": "feed-item-complete",     "key.ignore": "true",     "schema.ignore": "true",     "connection.url": "http://0.0.0.0:9200",     "type.name": "feed-item-type",     "name": "feed-item-connector"   } }' \
+     --data '{   "name": "feed-item-connector",   "config": {     "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",     "tasks.max": "1",     "topics": "$KAFKA_TOPIC",     "key.ignore": "true",     "schema.ignore": "true",     "connection.url": "http://$ELASTICSEARCH_HOST:$ELASTICSEARCH_PORT",     "type.name": "feed-item-type",     "name": "feed-item-connector"   } }' \
      http://localhost:8083/connectors &)
 
     if [[ $JSON_OUTPUT = *"feed-item-connector"* ]]; then

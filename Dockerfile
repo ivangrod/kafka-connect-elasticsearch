@@ -1,4 +1,3 @@
-
 FROM maven:3.5-jdk-8 as BUILD
 
 COPY src /usr/src/kafka-connect-elasticsearch/src
@@ -9,7 +8,7 @@ COPY pom.xml /usr/src/kafka-connect-elasticsearch
 RUN mvn -f /usr/src/kafka-connect-elasticsearch/pom.xml clean package -P standalone
 
 FROM confluentinc/cp-kafka-connect as kafka-connect
-
+LABEL maintainer="davromalc@gmail.com"
 COPY --from=BUILD /usr/src/kafka-connect-elasticsearch/target/kafka-connect-elasticsearch-5.0.0-standalone.jar /connect-plugins/kafka-connect-elasticsearch-5.0.0-standalone.jar
 
 COPY --from=BUILD /usr/src/kafka-connect-elasticsearch/config/quickstart-elasticsearch.properties /etc/kafka-connect-elasticsearch/quickstart-elasticsearch.properties
