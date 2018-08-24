@@ -187,7 +187,7 @@ public class JestElasticsearchClient implements ElasticsearchClient {
   }
 
   private boolean indexExists(String index) {
-    Action action = new IndicesExists.Builder(index).build();
+    Action<?> action = new IndicesExists.Builder(index).build();
     try {
       JestResult result = client.execute(action);
       return result.isSucceeded();
@@ -255,7 +255,7 @@ public class JestElasticsearchClient implements ElasticsearchClient {
   }
 
   // visible for testing
-  protected BulkableAction toBulkableAction(IndexableRecord record) {
+  protected BulkableAction<?> toBulkableAction(IndexableRecord record) {
     // If payload is null, the record was a tombstone and we should delete from the index.
     return record.payload != null ? toIndexRequest(record) : toDeleteRequest(record);
   }
@@ -334,7 +334,8 @@ public class JestElasticsearchClient implements ElasticsearchClient {
     return result.getJsonObject();
   }
 
-  public void close() {
+  @SuppressWarnings("deprecation")
+public void close() {
     client.shutdownClient();
   }
 }

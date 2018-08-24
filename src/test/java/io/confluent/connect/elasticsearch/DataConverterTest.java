@@ -144,7 +144,7 @@ public class DataConverterTest {
     );
   }
 
-  @Test
+@Test
   public void map() {
     Schema origSchema = SchemaBuilder.map(Schema.INT32_SCHEMA, Decimal.schema(2)).build();
     Schema preProcessedSchema = converter.preProcessSchema(origSchema);
@@ -170,7 +170,7 @@ public class DataConverterTest {
                 .put(ElasticsearchSinkConnectorConstants.MAP_KEY, 2)
                 .put(ElasticsearchSinkConnectorConstants.MAP_VALUE, 0.42)
         )),
-        new HashSet<>((List) converter.preProcessValue(origValue, origSchema, preProcessedSchema))
+        new HashSet<>((List<?>) converter.preProcessValue(origValue, origSchema, preProcessedSchema))
     );
 
     // optional
@@ -216,7 +216,7 @@ public class DataConverterTest {
                         .put(ElasticsearchSinkConnectorConstants.MAP_KEY, "field2")
                         .put(ElasticsearchSinkConnectorConstants.MAP_VALUE, 2)
         )),
-        new HashSet<>((List) converter.preProcessValue(origValue, origSchema, preProcessedSchema))
+        new HashSet<>((List<?>) converter.preProcessValue(origValue, origSchema, preProcessedSchema))
     );
   }
 
@@ -235,7 +235,7 @@ public class DataConverterTest {
         SchemaBuilder.map(Schema.STRING_SCHEMA, Schema.INT32_SCHEMA).build(),
         preProcessedSchema
     );
-    HashMap newValue = (HashMap) converter.preProcessValue(origValue, origSchema, preProcessedSchema);
+    HashMap<?,?> newValue = (HashMap<?,?>) converter.preProcessValue(origValue, origSchema, preProcessedSchema);
     assertEquals(origValue, newValue);
   }
 
